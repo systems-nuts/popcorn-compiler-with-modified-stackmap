@@ -1,0 +1,27 @@
+------------------------
+Known compilation issues
+------------------------
+
+- The toolchain compiles to LLVM bitcode with the aarch64 target because all IR
+  generated for that target will also correctly codegen for x86-64 (whereas the
+  reverse is not true).  However, when compiling using the x86-64 backend clang
+  will complain about the aarch64-specific feature "neon"
+
+- Structs/classes whose constituent fields can all be lowered into registers
+  are not appropriately split when lowering stackmaps
+
+- OpenMP symbols for outlined functions are known to not align (due to clashing
+  symbol names across binaries) but shouldn't cause issues, e.g.,
+  ".omp_outlined."
+
+- The compiler doesn't generate transformation metadata to handle fields of
+  structs with pointers to the stack
+
+--------------------
+Known runtime issues
+--------------------
+
+- Functions declared with __attribute__((destructor)) may not work correctly,
+  and may cause the application to segfault when exiting
+
+

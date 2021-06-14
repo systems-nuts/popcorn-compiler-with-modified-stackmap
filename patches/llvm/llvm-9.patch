@@ -10591,7 +10591,7 @@ index 00000000000..808526a3a80
 +
 +  /// Select where to insert migration points into functions.
 +  virtual bool runOnFunction(Function &F)
-+  {
++  {if (F.getName().contains("JNIJavaCallWrappers")) return false; // For GraalVM!
 +    LLVM_DEBUG(dbgs() << "\n********** SELECT MIGRATION POINTS **********\n"
 +                 << "********** Function: " << F.getName() << "\n\n");
 +
